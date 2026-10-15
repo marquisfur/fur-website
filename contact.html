@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Marquis Fur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <nav class="container">
+        <a href="index.html" class="logo">Marquis Fur</a>
+        <div class="nav-menu">
+            <a href="index.html" class="en">Home</a>
+            <a href="index.html" class="cn">首页</a>
+            <a href="products.html" class="en">Products</a>
+            <a href="products.html" class="cn">产品</a>
+            <a href="about.html" class="en">About Us</a>
+            <a href="about.html" class="cn">关于我们</a>
+            <a href="contact.html" class="en active">Contact</a>
+            <a href="contact.html" class="cn active">联系我们</a>
+        </div>
+        <div class="lang-switch">
+            <button id="btnEn" class="active">EN</button>
+            <button id="btnCn">中文</button>
+        </div>
+    </nav>
+
+    <section class="contact-block container" style="min-height:60vh;">
+        <h3 class="en">Contact Us</h3>
+        <h3 class="cn">联系我们</h3>
+        <p class="en">
+            Email: your-13623388328alex@gmail.com<br>
+            WhatsApp: +86 13623388328<br>
+            Location: Daying Town,Zaoqiang County,Hengshui,Hebei, China
+        </p>
+        <p class="cn">
+            邮箱：your-13623388328alex@gmail.com<br>
+            WhatsApp：+86 13623388328<br>
+            地址：中国河北省衡水市枣强县大营镇
+        </p>
+    </section>
+
+    <footer>
+        <p class="en">©2026 Marquis Fur. All rights reserved.</p>
+        <p class="cn">©2026 Marquis Fur 版权所有</p>
+    </footer>
+
+    <script>
+        const btnEn = document.getElementById("btnEn");
+        const btnCn = document.getElementById("btnCn");
+        const enDom = document.querySelectorAll(".en");
+        const cnDom = document.querySelectorAll(".cn");
+        btnEn.onclick = ()=>{
+            enDom.forEach(item=>item.style.display="block");
+            cnDom.forEach(item=>item.style.display="none");
+            btnEn.classList.add("active");
+            btnCn.classList.remove("active");
+        }
+        btnCn.onclick = ()=>{
+            enDom.forEach(item=>item.style.display="none");
+            cnDom.forEach(item=>item.style.display="block");
+            btnEn.classList.remove("active");
+            btnCn.classList.add("active");
+        }
+    </script>
+</body>
+</html>

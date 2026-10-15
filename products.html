@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Marquis Fur</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <nav class="container">
+        <a href="index.html" class="logo">Marquis Fur</a>
+        <div class="nav-menu">
+            <a href="index.html" class="en">Home</a>
+            <a href="index.html" class="cn">首页</a>
+            <a href="products.html" class="en active">Products</a>
+            <a href="products.html" class="cn active">产品</a>
+            <a href="about.html" class="en">About Us</a>
+            <a href="about.html" class="cn">关于我们</a>
+            <a href="contact.html" class="en">Contact</a>
+            <a href="contact.html" class="cn">联系我们</a>
+        </div>
+        <div class="lang-switch">
+            <button id="btnEn" class="active">EN</button>
+            <button id="btnCn">中文</button>
+        </div>
+    </nav>
+
+    <section class="container">
+        <div class="section-title">
+            <h3 class="en">Our Products</h3>
+            <h3 class="cn">产品展示</h3>
+            <p class="en">High quality fur coats, jackets and vests</p>
+            <p class="cn">高品质皮草大衣、外套、马甲</p>
+        </div>
+        <div class="product-grid" id="productGrid">
+            <!-- JS动态渲染卡片 -->
+        </div>
+    </section>
+
+    <footer>
+        <p class="en">©2026 Marquis Fur. All rights reserved.</p>
+        <p class="cn">©2026 Marquis Fur 版权所有</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="close" onclick="closeLightbox()">×</span>
+        <img id="light-img" src="" alt="preview">
+    </div>
+
+<script>
+// 双语切换
+const btnEn = document.getElementById("btnEn");
+const btnCn = document.getElementById("btnCn");
+const enDom = document.querySelectorAll(".en");
+const cnDom = document.querySelectorAll(".cn");
+
+btnEn.onclick = () => {
+    enDom.forEach(item => item.style.display = "block");
+    cnDom.forEach(item => item.style.display = "none");
+    btnEn.classList.add("active");
+    btnCn.classList.remove("active");
+};
+btnCn.onclick = () => {
+    enDom.forEach(item => item.style.display = "none");
+    cnDom.forEach(item => item.style.display = "block");
+    btnEn.classList.remove("active");
+    btnCn.classList.add("active");
+};
+
+// 图片灯箱
+function openLightbox(imgSrc){
+    document.getElementById("light-img").src = imgSrc;
+    document.getElementById("lightbox").classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+function closeLightbox(){
+    document.getElementById("lightbox").classList.remove("show");
+    document.body.style.overflow = "";
+}
+document.getElementById("lightbox").addEventListener("click", function(e){
+    if(e.target === this) closeLightbox();
+});
+
+// 解析md frontmatter yaml
+function parseFrontmatter(rawMd){
+    const match = rawMd.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if(!match) return null;
+    const fmText = match[1];
+    const data = {};
+    const lines = fmText.split("\n");
+    lines.forEach(line=>{
+        const kv = line.split(/:\s+/);
+        if(kv.length >= 2){
+            const key = kv[0].trim();
+            const val = kv.slice(1).join(":").trim();
+            if(val.startsWith("[")){
+                try{
+                    data[key] = JSON.parse(val.replace(/'/g,'"'));
+                }catch(e){
+                    data[key] = val;
+                }
+            }else{
+                data[key] = val;
+            }
+        }
+    });
+    return data;
+}
+
+// 加载全部产品
+async function loadAllProducts(){
+    try{
+        const resIndex = await fetch("content/products/index.json");
+        const pidList = await resIndex.json();
+        const gridEl = document.getElementById("productGrid");
+        gridEl.innerHTML = "";
+
+        for(const pid of pidList){
+            const resMd = await fetch(`content/products/${pid}.md`);
+            if(!resMd.ok) continue;
+            const rawMd = await resMd.text();
+            const item = parseFrontmatter(rawMd);
+            if(!item || !item.images || item.images.length === 0) continue;
+
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.onclick = () => location.href = `detail.html?id=${pid}`;
+            card.innerHTML = `
+                <div class="img-box">
+                    <img src="${item.images[0]}" alt="${item.titleEn}">
+                </div>
+                <div class="product-info">
+                    <h4 class="en">${item.titleEn}</h4>
+                    <h4 class="cn">${item.titleCn}</h4>
+                    <p class="desc en">${item.descEn}</p>
+                    <p class="desc cn">${item.descCn}</p>
+                </div>
+            `;
+            gridEl.appendChild(card);
+        }
+    }catch(err){
+        console.error("Load product list error", err);
+    }
+}
+loadAllProducts();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Marquis Fur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <nav class="container">
+        <a href="index.html" class="logo">Marquis Fur</a>
+        <div class="nav-menu">
+            <a href="index.html" class="en">Home</a>
+            <a href="index.html" class="cn">首页</a>
+            <a href="products.html" class="en">Products</a>
+            <a href="products.html" class="cn">产品</a>
+            <a href="about.html" class="en active">About Us</a>
+            <a href="about.html" class="cn active">关于我们</a>
+            <a href="contact.html" class="en">Contact</a>
+            <a href="contact.html" class="cn">联系我们</a>
+        </div>
+        <div class="lang-switch">
+            <button id="btnEn" class="active">EN</button>
+            <button id="btnCn">中文</button>
+        </div>
+    </nav>
+
+    <section class="about-block" style="min-height:60vh;">
+        <div class="about-wrap">
+            <h3 class="en">About Marquis Fur</h3>
+            <h3 class="cn">关于Marquis Fur</h3>
+            <p class="en" style="margin-bottom:20px;">
+                Marquis Fur is a professional fur garment manufacturer located in Daying Town, Hengshui Hebei — China’s famous fur industry base.
+            </p>
+            <p class="en" style="margin-bottom:20px;">
+                We specialize in fox fur, raccoon fur, mink fur coats, jackets and vests. We accept OEM & ODM custom orders for worldwide wholesale buyers. From raw fur material selection, cutting, sewing to final inspection, every procedure is controlled in our own factory.
+            </p>
+            <p class="en">
+                Our advantage: Stable supply, competitive factory price, flexible MOQ and on-time delivery. Welcome to visit our factory.
+            </p>
+
+            <p class="cn" style="margin-bottom:20px;">
+                Marquis Fur 坐落于中国河北衡水大营镇，国内知名皮草产业基地，是专业皮草生产工厂。
+            </p>
+            <p class="cn" style="margin-bottom:20px;">
+                主营狐狸、貉子、水貂皮大衣、外套、马甲。面向全球外贸批发商承接OEM/ODM定制订单。从原料选皮、裁皮、缝制到成品检验全部自主工厂完成。
+            </p>
+            <p class="cn">
+                我们优势：货源稳定，工厂直销价格，起订量灵活，交货准时。欢迎实地验厂。
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p class="en">©2026 Marquis Fur. All rights reserved.</p>
+        <p class="cn">©2026 Marquis Fur 版权所有</p>
+    </footer>
+
+    <script>
+        const btnEn = document.getElementById("btnEn");
+        const btnCn = document.getElementById("btnCn");
+        const enDom = document.querySelectorAll(".en");
+        const cnDom = document.querySelectorAll(".cn");
+        btnEn.onclick = ()=>{
+            enDom.forEach(item=>item.style.display="block");
+            cnDom.forEach(item=>item.style.display="none");
+            btnEn.classList.add("active");
+            btnCn.classList.remove("active");
+        }
+        btnCn.onclick = ()=>{
+            enDom.forEach(item=>item.style.display="none");
+            cnDom.forEach(item=>item.style.display="block");
+            btnEn.classList.remove("active");
+            btnCn.classList.add("active");
+        }
+    </script>
+</body>
+</html>
